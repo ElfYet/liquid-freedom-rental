@@ -77,7 +77,7 @@ html {
 }
 
 .custom-img {
-  background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80');
+  background-image: url('https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8b2NlYW58ZW58MHwwfDB8fHww');
 }
 
 /* Tailwind Styles */
@@ -91,7 +91,7 @@ html {
 }
 
 .cyan_btn_main {
-  @apply rounded-full border border-black bg-cyan-600 py-1.5 px-5 text-black font-medium transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-white bg-cyan-600 py-1.5 px-5 text-white font-medium transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
 .black_btn {

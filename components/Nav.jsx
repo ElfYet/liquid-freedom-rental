@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import Image from 'next/image';
 
@@ -10,11 +10,47 @@ const Nav = () => {
   const [color, setColor] = useState('transparent');
   const [textColor, setTextColor] = useState('black');
 
-const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownDesktopOpen, setDropdownDesktopOpen] = useState(false);
+  const [dropdownMobileOpen, setDropdownMobileOpen] = useState(false);
 
-const toggleDropdown = () => {
-  setDropdownOpen(!dropdownOpen);
-}
+  const dropdownRefDesktop = useRef(null);
+  const dropdownRefMobile = useRef(null);
+
+
+  const toggleDropdownDesktop = () => {
+    setDropdownDesktopOpen(!dropdownDesktopOpen);
+  };
+
+  const toggleDropdownMobile = () => {
+    setDropdownMobileOpen(!dropdownMobileOpen)
+  }
+
+  const handleClickOutsideDesktop = (event) => {
+    if (dropdownRefDesktop.current && dropdownDesktopOpen && !dropdownRefDesktop.current.contains(event.target)) {
+      setDropdownDesktopOpen(!dropdownDesktopOpen);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutsideDesktop);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideDesktop);
+    };
+  }, [dropdownDesktopOpen]);
+
+  const handleClickOutsideMobile = (event) => {
+    if (dropdownRefMobile.current && dropdownMobileOpen && !dropdownRefMobile.current.contains(event.target)) {
+      setDropdownMobileOpen(!dropdownMobileOpen);
+    }
+  };
+  
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutsideMobile);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideMobile);
+    };
+  }, [dropdownMobileOpen]);
+
 
   const handleNav = () => {
     setNav(!nav);
@@ -57,67 +93,92 @@ const toggleDropdown = () => {
           <li className='p-4'>
             <Link href='/' className='white_btn'>Home</Link>
           </li>
+
           <li className='p-4'>
             <Link href='/about' className='white_btn'>About</Link>
           </li>
+
           <li className='p-4'>
             <Link href='/rentals' className='white_btn'>Rentals</Link>
           </li>
-          <li className="p-4 relative">
+
+          <li onClick={toggleDropdownDesktop} className="p-4 relative list-none" ref={dropdownRefDesktop}>
             <button
-              onClick={toggleDropdown}
               className="white_btn"
             >
               Contact
-              <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              <svg className="-mr-1 h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
               </svg>
             </button>
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                <div className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Email: example@example.com</div>
-                <div className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Phone: (123) 456-7890</div>
+            {dropdownDesktopOpen && (
+              <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                <div className="block px-4 py-2 text-black">Email: example@example.com</div>
+                <div className="block px-4 py-2 text-black">Phone: (123) 456-7890</div>
               </div>
             )}
           </li>
+
           <li className='p-4'>
             <Link href='/bookingstep1' className='cyan_btn_main'>Book</Link>
           </li>
         </ul>
 
-        {/* Mobile Button */}
-        <div onClick={handleNav} className='block sm:hidden z-10'>
-          {nav ? (
-            <AiOutlineClose size={20} style={{ color: `${textColor}` }} />
-          ) : (
-            <AiOutlineMenu size={20} style={{ color: `${textColor}` }} />
-          )}
-        </div>
-        {/* Mobile Menu */}
-        <div
-          className={
-            nav
-              ? 'sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-white text-center ease-in duration-300'
-              : 'sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-white text-center ease-in duration-300'
-          }
-        >
-          <ul>
-            <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-              <Link href='/'>Home</Link>
-            </li>
-            <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-              <Link href='/about'>About</Link>
-            </li>
-            <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-              <Link href='/rentals'>Rentals</Link>
-            </li>
-            <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-              <Link href='/contact'>Contact</Link>
-            </li>
-          </ul>
-        </div>
+      {/* Mobile Button */}
+      <div onClick={handleNav} className='block sm:hidden z-10'>
+        {nav ? (
+          <AiOutlineClose size={25} style={{ color: 'black' }} />
+        ) : (
+          <AiOutlineMenu size={25} style={{ color: 'black' }} />
+        )}
+      </div>
+      {/* Mobile Menu */}
+      <div
+        className={`${
+          nav ? 'block' : 'hidden'
+        } sm:hidden absolute top-16 left-0 w-full bg-cyan-600 flex flex-col items-center text-center transition-transform rounded-md duration-300 ease-in-out`}
+      >
+        <ul className='w-full'>
+          <li onClick={handleNav} className='p-4 text-2xl border-b-2 shadow-lg border-white rounded-lg'>
+            <Link href='/'>
+              <div className="block w-full h-full cursor-pointer">Home</div>
+            </Link>
+          </li>
+
+          <li onClick={handleNav} className='p-4 text-2xl border-b-2 shadow-lg border-white rounded-lg'>
+            <Link href='/about'>
+              <div className="block w-full h-full cursor-pointer">About</div>
+            </Link>
+          </li>
+
+          <li onClick={handleNav} className='p-4 text-2xl border-b-2 shadow-lg border-white rounded-lg'>
+            <Link href='/rentals'>
+              <div className="block w-full h-full cursor-pointer">Rentals</div>
+            </Link>
+          </li>
+
+          <li onClick={toggleDropdownMobile} className='p-4 text-2xl border-b-2 cursor-pointer shadow-lg items-center static border-white rounded-lg' ref={dropdownRefMobile}>
+            Contact
+            <svg className="-mr-1 h-5 w-5 inline-block  text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+            </svg>
+            {dropdownMobileOpen && (
+              <div className="mt-2 w-full bg-white shadow-lg z-10 rounded-sm">
+                <div className="block px-4 py-2 text-black">Email: example@example.com</div>
+                <div className="block px-4 py-2 text-black">Phone: (123) 456-7890</div>
+              </div>
+            )}
+          </li>
+
+          <li onClick={handleNav} className='p-4 text-2xl border-b-2 shadow-lg border-white rounded-lg'>
+            <Link href='/bookingstep1'>
+              <div className="block w-full h-full cursor-pointer">Book</div>
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
+  </div>
   );
 };
 
