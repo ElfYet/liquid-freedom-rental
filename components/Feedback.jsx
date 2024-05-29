@@ -25,11 +25,11 @@ const Feedback = () => {
   };
 
   return (
-    <div className="fixed right-5 top-3/4 transform translate-x-1/2 z-50">
+    <div className="fixed right-3 top-3/4 transform translate-x-1/2 z-50">
       <button
         onClick={toggleForm}
-        className="bg-cyan-600 text-white px-4 py-2 rounded-r-lg shadow-lg"
-        style={{ width: '40px', height: '100px', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        className="bg-cyan-600 text-white px-1 py-2 rounded-r-lg shadow-lg"
+        style={{ width: '30px', height: '100px', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
       >
         Feedback
       </button>

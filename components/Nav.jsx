@@ -107,7 +107,7 @@ const Nav = () => {
               className="white_btn"
             >
               Contact
-              <svg className="-mr-1 h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg className={`-mr-1 h-5 w-5  text-black transition-transform duration-300 ${dropdownDesktopOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
               </svg>
             </button>
@@ -134,9 +134,7 @@ const Nav = () => {
       </div>
       {/* Mobile Menu */}
       <div
-        className={`${
-          nav ? 'block' : 'hidden'
-        } sm:hidden absolute top-16 left-0 w-full bg-cyan-600 flex flex-col items-center text-center transition-transform rounded-md duration-300 ease-in-out`}
+        className={`${nav ? 'nav-open' : ''} nav sm:hidden absolute top-16 left-0 w-full bg-cyan-600 flex flex-col items-center text-center rounded-md` }
       >
         <ul className='w-full'>
           <li onClick={handleNav} className='p-4 text-2xl border-b-2 shadow-lg border-white rounded-lg'>
@@ -159,11 +157,11 @@ const Nav = () => {
 
           <li onClick={toggleDropdownMobile} className='p-4 text-2xl border-b-2 cursor-pointer shadow-lg items-center static border-white rounded-lg' ref={dropdownRefMobile}>
             Contact
-            <svg className="-mr-1 h-5 w-5 inline-block  text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg className={`-mr-1 h-5 w-5 inline-block  text-black transition-transform duration-300 ${dropdownMobileOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
             </svg>
             {dropdownMobileOpen && (
-              <div className="mt-2 w-full bg-white shadow-lg z-10 rounded-sm">
+              <div className="mt-2 w-full bg-white shadow-lg z-10 rounded-md">
                 <div className="block px-4 py-2 text-black">Email: example@example.com</div>
                 <div className="block px-4 py-2 text-black">Phone: (123) 456-7890</div>
               </div>
